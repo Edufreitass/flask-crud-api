@@ -28,7 +28,7 @@ db.create_all()
 @app.route('/items/<id>', methods=['GET'])
 def get_item(id):
     item = Item.query.get(id)
-    del item.id__dict__['_sa_instance_state']
+    del item.__dict__['_sa_instance_state']
     return jsonify(item.__dict__)
 
 
@@ -49,7 +49,7 @@ def create_item():
     return "item created"
 
 
-@app.route('items/<id>', methods=['PUT'])
+@app.route('/items/<id>', methods=['PUT'])
 def update_item(id):
     body = request.get_json()
     db.session.query(Item).filter_by(id=id).update(
@@ -59,7 +59,7 @@ def update_item(id):
     return "item updated"
 
 
-@app.route('items/<id>', methods=['DELETE'])
+@app.route('/items/<id>', methods=['DELETE'])
 def delete_item(id):
     db.session.query(Item).filter_by(id=id).delete()
     db.session.commit()
